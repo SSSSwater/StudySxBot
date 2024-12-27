@@ -1,8 +1,8 @@
 import requests
 import json
 
-# url_root = "https://mock.apifox.com/m1/4156288-0-default/"
-url_root = "http://121.196.197.146:8211/api/"
+url_root = "http://localhost:5555/"
+url_root = "http://121.43.164.15:5555/"
 headers = {
     "Content-Type": "application/json",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.3 Safari/605.1.15"
@@ -14,13 +14,13 @@ def post_register(qq, name):
         "qq": qq,
         "name": name
     }
-    url = url_root + "Register"
+    url = url_root + "Register/signUp"
     response = requests.post(url, data=json.dumps(param), headers=headers)
     return response
 
 
 def get_register():
-    url = url_root + "Register"
+    url = url_root + "Register/getInfo"
     response = requests.get(url, headers=headers)
     return response
 
@@ -30,14 +30,17 @@ def put_register(qq, name):
         "qq": qq,
         "name": name
     }
-    url = url_root + "Register/" + qq
+    url = url_root + "Register/modifyName"
     response = requests.put(url, params=param, headers=headers)
     return response
 
 
 def delete_register(qq):
-    url = url_root + "Register/" + qq
-    response = requests.delete(url, headers=headers)
+    param = {
+        "qq": qq
+    }
+    url = url_root + "Register/cancel"
+    response = requests.delete(url, params=param, headers=headers)
     return response
 
 
@@ -47,13 +50,13 @@ def post_daka(qq, pic_url, word_num):
         "pic_url": pic_url,
         "word_num": word_num
     }
-    url = url_root + "Mark"
+    url = url_root + "Marklog/markToday"
     response = requests.post(url, data=json.dumps(param), headers=headers)
     return response
 
 
 def get_daka():
-    url = url_root + "Mark"
+    url = url_root + "Marklog/markToday"
     response = requests.get(url, headers=headers)
     return response
 
@@ -92,22 +95,29 @@ def delete_remind_list(qq):
 
 
 def get_death_list(offset=0):
-    url = url_root + "Deathlist/" + str(offset)
-    response = requests.get(url, headers=headers)
+    url = url_root + "Marklog/getAntiSomedaylist"
+    param = {
+        "offset": offset
+    }
+    response = requests.get(url, params=param, headers=headers)
     return response
 
 
 def get_today_list(offset=0):
-    url = url_root + "Todaylist/" + str(offset)
-    response = requests.get(url, headers=headers)
+    url = url_root + "Marklog/getSomedaylist"
+    param = {
+        "offset": offset
+    }
+    response = requests.get(url, params=param, headers=headers)
     return response
 
 
 def get_personal_history_list(qq=None):
-    url = url_root + "Marklog/"
-    if qq:
-        url += qq
-    response = requests.get(url, headers=headers)
+    url = url_root + "Marklog/getOneMarklist"
+    param = {
+        "qq": qq
+    }
+    response = requests.get(url, params=param, headers=headers)
     return response
 
 
@@ -118,3 +128,4 @@ def test_connect():
     except requests.exceptions.ConnectionError:
         return json.dumps({"status": 405})
 
+print(get_today_list().json())
