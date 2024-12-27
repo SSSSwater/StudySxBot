@@ -7,9 +7,9 @@ import openai
 
 
 def random_10(group_id):
-    if not os.path.exists("recipe"):
-        os.makedirs("recipe")
-    rec_dir = "recipe/recipe_" + str(group_id) + ".txt"
+    if not os.path.exists("data/recipe"):
+        os.makedirs("data/recipe")
+    rec_dir = "data/recipe/recipe_" + str(group_id) + ".txt"
     if not os.path.exists(rec_dir):
         return []
     with open(rec_dir, "r", encoding='utf-8') as f:
@@ -20,9 +20,9 @@ def random_10(group_id):
 
 
 def add(food, group_id):
-    if not os.path.exists("recipe"):
-        os.makedirs("recipe")
-    rec_dir = "recipe/recipe_" + str(group_id) + ".txt"
+    if not os.path.exists("data/recipe"):
+        os.makedirs("data/recipe")
+    rec_dir = "data/recipe/recipe_" + str(group_id) + ".txt"
     if not os.path.exists(rec_dir):
         with open(rec_dir, "a", encoding='utf-8') as f:
             pass
@@ -49,9 +49,9 @@ def add(food, group_id):
 
 
 def get_count(group_id):
-    if not os.path.exists("recipe"):
-        os.makedirs("recipe")
-    rec_dir = "recipe/recipe_" + str(group_id) + ".txt"
+    if not os.path.exists("data/recipe"):
+        os.makedirs("data/recipe")
+    rec_dir = "data/recipe/recipe_" + str(group_id) + ".txt"
     if not os.path.exists(rec_dir):
         return [0, 0]
     with open(rec_dir, "r", encoding='utf-8') as f:
@@ -82,9 +82,9 @@ def rate10_for_s_in_all(n, str_num):
 
 
 def relate_count(food_str, group_id):
-    if not os.path.exists("recipe"):
-        os.makedirs("recipe")
-    rec_dir = "recipe/recipe_" + str(group_id) + ".txt"
+    if not os.path.exists("data/recipe"):
+        os.makedirs("data/recipe")
+    rec_dir = "data/recipe/recipe_" + str(group_id) + ".txt"
     if not os.path.exists(rec_dir):
         return [0, 0, 0]
     with open(rec_dir, "r", encoding='utf-8') as f:
@@ -114,4 +114,5 @@ def custom_requestGPT():
     ]}
     print(requests.post(url=url,data=json.dumps(param),headers=header).text)
 
-custom_requestGPT()
+if not os.path.exists("data"):
+    os.makedirs("data")

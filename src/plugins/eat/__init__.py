@@ -21,7 +21,6 @@ re_count = on_command("re_count", aliases=set(study_config.re_count_key), priori
 @eat.handle()
 async def _eat(bot: Bot, event: MessageEvent, args: Message = CommandArg()):
     print("收到消息:",bot,event)
-    await bot.send(event, "测试")
     get_food = random_10(event.group_id)
     msg = "给群友上了这些菜:"
     i = 1
